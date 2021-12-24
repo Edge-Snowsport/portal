@@ -1,17 +1,15 @@
 <?php
+
 namespace Crater\Models;
 
-use Crater\Models\Company;
-use Illuminate\Database\Eloquent\Model;
-use Crater\Models\User;
-use Crater\Models\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
     use HasFactory;
-    const BILLING_TYPE = 'billing';
-    const SHIPPING_TYPE = 'shipping';
+    public const BILLING_TYPE = 'billing';
+    public const SHIPPING_TYPE = 'shipping';
 
     protected $guarded = ['id'];
 
@@ -25,6 +23,11 @@ class Address extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function company()

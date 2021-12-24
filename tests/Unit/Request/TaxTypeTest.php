@@ -1,26 +1,30 @@
 <?php
 
 use Crater\Http\Requests\TaxTypeRequest;
+use Illuminate\Validation\Rule;
 
 test('tax type request validation rules', function () {
-    $request = new TaxTypeRequest;
+    $request = new TaxTypeRequest();
 
-    $this->assertEquals([
+    $this->assertEquals(
+        [
             'name' => [
-                'required'
+                'required',
+                Rule::unique('tax_types')
+                ->where('company_id', $request->header('company'))
             ],
             'percent' => [
-                'required'
+                'required',
             ],
             'description' => [
-                'nullable'
+                'nullable',
             ],
             'compound_tax' => [
-                'nullable'
+                'nullable',
             ],
             'collective_tax' => [
-                'nullable'
-            ]
+                'nullable',
+            ],
         ],
         $request->rules()
     );
@@ -28,7 +32,7 @@ test('tax type request validation rules', function () {
 
 
 test('tax type request authorize', function () {
-    $request = new TaxTypeRequest;
+    $request = new TaxTypeRequest();
 
     $this->assertTrue($request->authorize());
 });

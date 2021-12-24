@@ -25,11 +25,8 @@ class UpdateSettingsRequest extends FormRequest
     {
         return [
             'settings' => [
-                'required'
+                'required',
             ],
-            'settings.*' => [
-                'required'
-            ]
         ];
     }
 }

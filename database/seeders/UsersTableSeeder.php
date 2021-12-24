@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 use Crater\Models\Company;
-use Illuminate\Database\Seeder;
-use Crater\Models\User;
 use Crater\Models\Setting;
-use Illuminate\Support\Facades\Hash;
+use Crater\Models\User;
+use Illuminate\Database\Seeder;
+use Silber\Bouncer\BouncerFacade;
+use Vinkla\Hashids\Facades\Hashids;
 
 class UsersTableSeeder extends Seeder
 {
@@ -21,16 +22,21 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@craterapp.com',
             'name' => 'Jane Doe',
             'role' => 'super admin',
-            'password' => 'crater@123'
+            'password' => 'crater@123',
         ]);
 
         $company = Company::create([
             'name' => 'xyz',
-            'unique_hash' => str_random(20)
+            'owner_id' => $user->id
         ]);
 
-        $user->company_id = $company->id;
-        $user->save();
+        $company->unique_hash = Hashids::connection(Company::class)->encode($company->id);
+        $company->save();
+        $company->setupDefaultData();
+        $user->companies()->attach($company->id);
+        BouncerFacade::scope()->to($company->id);
+
+        $user->assign('super admin');
 
         Setting::setSetting('profile_complete', 0);
     }

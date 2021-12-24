@@ -3,7 +3,6 @@
 namespace Crater\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Crater\Http\Middleware\AdminMiddleware;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 class Kernel extends HttpKernel
@@ -22,7 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Crater\Http\Middleware\TrustProxies::class,
         \Crater\Http\Middleware\ConfigMiddleware::class,
-        \Fruitcake\Cors\HandleCors::class
+        \Fruitcake\Cors\HandleCors::class,
     ];
 
     /**
@@ -57,17 +56,21 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Crater\Http\Middleware\Authenticate::class,
+        'bouncer' => \Crater\Http\Middleware\ScopeBouncer::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Crater\Http\Middleware\RedirectIfAuthenticated::class,
+        'customer' => \Crater\Http\Middleware\CustomerRedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => AdminMiddleware::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'install' => \Crater\Http\Middleware\InstallationMiddleware::class,
         'redirect-if-installed' => \Crater\Http\Middleware\RedirectIfInstalled::class,
         'redirect-if-unauthenticated' => \Crater\Http\Middleware\RedirectIfUnauthorized::class,
+        'customer-guest' => \Crater\Http\Middleware\CustomerGuest::class,
+        'company' => \Crater\Http\Middleware\CompanyMiddleware::class,
     ];
+
     /**
      * The priority-sorted list of middleware.
      *

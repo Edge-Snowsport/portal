@@ -1,15 +1,15 @@
 <?php
+
 namespace Crater\Models;
 
-use Crater\Models\CompanySetting;
-use Illuminate\Database\Eloquent\Model;
-use Crater\Models\Expense;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class ExpenseCategory extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name', 'company_id', 'description'];
 
     /**
@@ -24,9 +24,15 @@ class ExpenseCategory extends Model
         return $this->hasMany(Expense::class);
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function getFormattedCreatedAtAttribute($value)
     {
         $dateFormat = CompanySetting::getSetting('carbon_date_format', $this->company_id);
+
         return Carbon::parse($this->created_at)->format($dateFormat);
     }
 
@@ -35,9 +41,9 @@ class ExpenseCategory extends Model
         return $this->expenses()->sum('amount');
     }
 
-    public function scopeWhereCompany($query, $company_id)
+    public function scopeWhereCompany($query)
     {
-        $query->where('company_id', $company_id);
+        $query->where('company_id', request()->header('company'));
     }
 
     public function scopeWhereCategory($query, $category_id)
@@ -47,7 +53,7 @@ class ExpenseCategory extends Model
 
     public function scopeWhereSearch($query, $search)
     {
-        $query->where('name', 'LIKE', '%' . $search . '%');
+        $query->where('name', 'LIKE', '%'.$search.'%');
     }
 
     public function scopeApplyFilters($query, array $filters)
@@ -70,7 +76,7 @@ class ExpenseCategory extends Model
     public function scopePaginateData($query, $limit)
     {
         if ($limit == 'all') {
-            return collect(['data' => $query->get()]);
+            return $query->get();
         }
 
         return $query->paginate($limit);

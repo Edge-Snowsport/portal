@@ -2,24 +2,25 @@
 
 namespace Crater\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Crater\Models\Tax;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class TaxType extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'percent',
         'company_id',
         'compound_tax',
         'collective_tax',
-        'description'
+        'description',
     ];
 
     protected $casts = [
-        'percent' => 'float'
+        'percent' => 'float',
+        'compound_tax' => 'boolean'
     ];
 
     public function taxes()
@@ -27,9 +28,14 @@ class TaxType extends Model
         return $this->hasMany(Tax::class);
     }
 
-    public function scopeWhereCompany($query, $company_id)
+    public function company()
     {
-        $query->where('company_id', $company_id);
+        return $this->belongsTo(Company::class);
+    }
+
+    public function scopeWhereCompany($query)
+    {
+        $query->where('company_id', request()->header('company'));
     }
 
     public function scopeWhereTaxType($query, $tax_type_id)
@@ -67,13 +73,13 @@ class TaxType extends Model
 
     public function scopeWhereSearch($query, $search)
     {
-        $query->where('name', 'LIKE', '%' . $search . '%');
+        $query->where('name', 'LIKE', '%'.$search.'%');
     }
 
     public function scopePaginateData($query, $limit)
     {
         if ($limit == 'all') {
-            return collect(['data' => $query->get()]);
+            return $query->get();
         }
 
         return $query->paginate($limit);

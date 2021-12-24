@@ -26,34 +26,52 @@ class UserRequest extends FormRequest
     {
         $rules = [
             'name' => [
-                'required'
+                'required',
             ],
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')
+                Rule::unique('users'),
             ],
             'phone' => [
-                'nullable'
+                'nullable',
             ],
             'password' => [
                 'required',
-                'min:8'
-            ]
+                'min:8',
+            ],
+            'companies' => [
+                'required',
+            ],
+            'companies.*.id' => [
+                'required',
+            ],
+            'companies.*.role' => [
+                'required',
+            ],
         ];
 
         if ($this->getMethod() == 'PUT') {
             $rules['email'] = [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($this->user)
+                Rule::unique('users')->ignore($this->user),
             ];
             $rules['password'] = [
                 'nullable',
-                'min:8'
+                'min:8',
             ];
         }
 
         return $rules;
+    }
+
+    public function getUserPayload()
+    {
+        return collect($this->validated())
+            ->merge([
+                'creator_id' => $this->user()->id,
+            ])
+            ->toArray();
     }
 }

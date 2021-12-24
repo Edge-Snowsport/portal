@@ -1,4 +1,5 @@
 <?php
+
 namespace Crater\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,11 +25,20 @@ class ExpenseCategoryRequest extends FormRequest
     {
         return [
             'name' => [
-                'required'
+                'required',
             ],
             'description' => [
-                'nullable'
-            ]
+                'nullable',
+            ],
         ];
+    }
+
+    public function getExpenseCategoryPayload()
+    {
+        return collect($this->validated())
+            ->merge([
+                'company_id' => $this->header('company')
+            ])
+            ->toArray();
     }
 }

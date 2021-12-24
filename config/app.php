@@ -157,6 +157,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Lavary\Menu\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -167,7 +168,7 @@ return [
         Crater\Providers\EventServiceProvider::class,
         Crater\Providers\RouteServiceProvider::class,
         Crater\Providers\DropboxServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
@@ -219,5 +220,6 @@ return [
         'Flash' => Laracasts\Flash\Flash::class,
         // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Pusher' => Pusher\Pusher::class,
+        'Menu' => Lavary\Menu\Facade::class
     ],
 ];

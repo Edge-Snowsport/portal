@@ -1,51 +1,98 @@
 <?php
 
 use Crater\Http\Requests\CustomerRequest;
+use Illuminate\Validation\Rule;
 
-test('customer request post validation rules', function () {
-    $request = new CustomerRequest;
+test('customer request validation rules', function () {
+    $request = new CustomerRequest();
 
-    $request->setMethod('POST');
-
-    $this->assertEquals([
+    $this->assertEquals(
+        [
             'name' => [
-                'required'
-            ],
-            'addresses.*.address_street_1' => [
-                'max:255'
-            ],
-            'addresses.*.address_street_2' => [
-                'max:255'
+                'required',
             ],
             'email' => [
                 'email',
                 'nullable',
-                'unique:users,email',
-            ]
-        ],
-        $request->rules()
-    );
-});
-
-test('customer request put validation rules', function () {
-    $request = new CustomerRequest;
-
-    $request->setMethod('PUT');
-
-    $this->assertEquals([
-                'name' => [
-                'required'
+                Rule::unique('customers')->where('company_id', $request->header('company'))
             ],
-            'addresses.*.address_street_1' => [
-                'max:255'
-            ],
-            'addresses.*.address_street_2' => [
-                'max:255'
-            ],
-            'email' => [
-                'email',
+            'password' => [
                 'nullable',
-                'unique:users,email',
+            ],
+            'phone' => [
+                'nullable',
+            ],
+            'company_name' => [
+                'nullable',
+            ],
+            'contact_name' => [
+                'nullable',
+            ],
+            'website' => [
+                'nullable',
+            ],
+            'prefix' => [
+                'nullable',
+            ],
+            'enable_portal' => [
+                'nullable',
+            ],
+            'currency_id' => [
+                'nullable',
+            ],
+            'billing.name' => [
+                'nullable',
+            ],
+            'billing.address_street_1' => [
+                'nullable',
+            ],
+            'billing.address_street_2' => [
+                'nullable',
+            ],
+            'billing.city' => [
+                'nullable',
+            ],
+            'billing.state' => [
+                'nullable',
+            ],
+            'billing.country_id' => [
+                'nullable',
+            ],
+            'billing.zip' => [
+                'nullable',
+            ],
+            'billing.phone' => [
+                'nullable',
+            ],
+            'billing.fax' => [
+                'nullable',
+            ],
+            'shipping.name' => [
+                'nullable',
+            ],
+            'shipping.address_street_1' => [
+                'nullable',
+            ],
+            'shipping.address_street_2' => [
+                'nullable',
+            ],
+            'shipping.city' => [
+                'nullable',
+            ],
+            'shipping.state' => [
+                'nullable',
+            ],
+            'shipping.country_id' => [
+                'nullable',
+            ],
+            'shipping.zip' => [
+                'nullable',
+            ],
+            'shipping.phone' => [
+                'nullable',
+            ],
+            'shipping.fax' => [
+                'nullable',
             ]
         ],
         $request->rules()
@@ -53,7 +100,7 @@ test('customer request put validation rules', function () {
 });
 
 test('customer request authorize', function () {
-    $request = new CustomerRequest;
+    $request = new CustomerRequest();
 
     $this->assertTrue($request->authorize());
 });

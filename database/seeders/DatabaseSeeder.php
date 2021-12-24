@@ -13,13 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
         $this->call(CurrenciesTableSeeder::class);
-        $this->call(DefaultSettingsSeeder::class);
         $this->call(CountriesTableSeeder::class);
-        $this->call(EstimateTemplateSeeder::class);
-        $this->call(InvoiceTemplateSeeder::class);
-        $this->call(PaymentMethodSeeder::class);
-        $this->call(UnitSeeder::class);
+        $this->call(UsersTableSeeder::class);
     }
 }

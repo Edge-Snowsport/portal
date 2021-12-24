@@ -1,7 +1,9 @@
 <?php
+
 namespace Crater\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CompanyRequest extends FormRequest
 {
@@ -24,11 +26,12 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => [
-                'required'
+                'required',
+                Rule::unique('companies')->ignore($this->header('company'), 'id'),
             ],
-            'country_id' => [
-                'required'
-            ]
+            'address.country_id' => [
+                'required',
+            ],
         ];
     }
 }

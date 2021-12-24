@@ -24,8 +24,8 @@ class ExpenseCategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'company_id' => User::where('role', 'super admin')->first()->company_id,
-            'description' => $this->faker->text
+            'company_id' => User::find(1)->companies()->first()->id,
+            'description' => $this->faker->text,
         ];
     }
 }

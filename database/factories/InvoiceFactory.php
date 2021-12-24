@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use Crater\Models\Currency;
+use Crater\Models\Customer;
 use Crater\Models\Invoice;
+use Crater\Models\RecurringInvoice;
 use Crater\Models\User;
-use Crater\Models\InvoiceTemplate;
+use Crater\Services\SerialNumberFormatter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class InvoiceFactory extends Factory
@@ -95,18 +98,24 @@ class InvoiceFactory extends Factory
      */
     public function definition()
     {
+        $sequenceNumber = (new SerialNumberFormatter())
+            ->setModel(new Invoice())
+            ->setCompany(User::find(1)->companies()->first()->id)
+            ->setNextNumbers();
+
         return [
             'invoice_date' => $this->faker->date('Y-m-d', 'now'),
             'due_date' => $this->faker->date('Y-m-d', 'now'),
-            'invoice_number' => 'INV-'.Invoice::getNextInvoiceNumber('INV'),
-            'reference_number' => Invoice::getNextInvoiceNumber('INV'),
-            'user_id' => User::factory()->create(['role' => 'customer'])->id,
-            'invoice_template_id' => InvoiceTemplate::find(1) ?? InvoiceTemplate::factory(),
+            'invoice_number' => $sequenceNumber->getNextNumber(),
+            'sequence_number' => $sequenceNumber->nextSequenceNumber,
+            'customer_sequence_number' => $sequenceNumber->nextCustomerSequenceNumber,
+            'reference_number' => $sequenceNumber->getNextNumber(),
+            'template_name' => 'invoice1',
             'status' => Invoice::STATUS_DRAFT,
             'tax_per_item' => 'NO',
             'discount_per_item' => 'NO',
             'paid_status' => Invoice::STATUS_UNPAID,
-            'company_id' => User::where('role', 'super admin')->first()->company_id,
+            'company_id' => User::find(1)->companies()->first()->id,
             'sub_total' => $this->faker->randomDigitNotNull,
             'total' => $this->faker->randomDigitNotNull,
             'discount_type' => $this->faker->randomElement(['percentage', 'fixed']),
@@ -121,7 +130,16 @@ class InvoiceFactory extends Factory
                 return $invoice['total'];
             },
             'notes' => $this->faker->text(80),
-            'unique_hash' => str_random(60)
+            'unique_hash' => str_random(60),
+            'customer_id' => Customer::factory(),
+            'recurring_invoice_id' => RecurringInvoice::factory(),
+            'exchange_rate' => $this->faker->randomDigitNotNull,
+            'base_discount_val' => $this->faker->randomDigitNotNull,
+            'base_sub_total' => $this->faker->randomDigitNotNull,
+            'base_total' => $this->faker->randomDigitNotNull,
+            'base_tax' => $this->faker->randomDigitNotNull,
+            'base_due_amount' => $this->faker->randomDigitNotNull,
+            'currency_id' => Currency::find(1)->id,
         ];
     }
 }

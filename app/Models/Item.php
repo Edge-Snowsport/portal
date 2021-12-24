@@ -1,14 +1,10 @@
 <?php
+
 namespace Crater\Models;
 
-use Crater\Models\CompanySetting;
-use Crater\Models\Tax;
-use Crater\Models\Unit;
-use Illuminate\Database\Eloquent\Model;
-use Crater\Models\InvoiceItem;
-use Crater\Models\EstimateItem;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class Item extends Model
@@ -18,21 +14,31 @@ class Item extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'price' => 'integer'
+        'price' => 'integer',
     ];
 
     protected $appends = [
-        'formattedCreatedAt'
+        'formattedCreatedAt',
     ];
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
     public function creator()
     {
         return $this->belongsTo('Crater\Models\User', 'creator_id');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 
     public function scopeWhereSearch($query, $search)
@@ -90,7 +96,7 @@ class Item extends Model
     public function scopePaginateData($query, $limit)
     {
         if ($limit == 'all') {
-            return collect(['data' => $query->get()]);
+            return $query->get();
         }
 
         return $query->paginate($limit);
@@ -98,20 +104,21 @@ class Item extends Model
 
     public function getFormattedCreatedAtAttribute($value)
     {
-        $dateFormat = CompanySetting::getSetting('carbon_date_format', $this->company_id);
+        $dateFormat = CompanySetting::getSetting('carbon_date_format', request()->header('company'));
+
         return Carbon::parse($this->created_at)->format($dateFormat);
     }
 
     public function taxes()
     {
         return $this->hasMany(Tax::class)
-            ->where('invoice_item_id', NULL)
-            ->where('estimate_item_id', NULL);
+            ->where('invoice_item_id', null)
+            ->where('estimate_item_id', null);
     }
 
-    public function scopeWhereCompany($query, $company_id)
+    public function scopeWhereCompany($query)
     {
-        $query->where('items.company_id', $company_id);
+        $query->where('items.company_id', request()->header('company'));
     }
 
     public function invoiceItems()
@@ -121,7 +128,7 @@ class Item extends Model
 
     public function estimateItems()
     {
-        return $this->hasMany( EstimateItem::class);
+        return $this->hasMany(EstimateItem::class);
     }
 
     public static function createItem($request)
@@ -129,10 +136,14 @@ class Item extends Model
         $data = $request->validated();
         $data['company_id'] = $request->header('company');
         $data['creator_id'] = Auth::id();
+        $company_currency = CompanySetting::getSetting('currency', $request->header('company'));
+        $data['currency_id'] = $company_currency;
         $item = self::create($data);
 
         if ($request->has('taxes')) {
             foreach ($request->taxes as $tax) {
+                $item->tax_per_item = true;
+                $item->save();
                 $tax['company_id'] = $request->header('company');
                 $item->taxes()->create($tax);
             }
@@ -151,6 +162,8 @@ class Item extends Model
 
         if ($request->has('taxes')) {
             foreach ($request->taxes as $tax) {
+                $this->tax_per_item = true;
+                $this->save();
                 $tax['company_id'] = $request->header('company');
                 $this->taxes()->create($tax);
             }

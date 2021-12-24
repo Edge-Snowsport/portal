@@ -1,7 +1,7 @@
 <?php
+
 namespace Crater\Models;
 
-use Crater\Models\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,22 +32,25 @@ class CompanySetting extends Model
                 [
                     'option' => $key,
                     'company_id' => $company_id,
-                    'value' => $value
+                    'value' => $value,
                 ]
             );
         }
     }
 
+    public static function getAllSettings($company_id)
+    {
+        return static::whereCompany($company_id)->get()->mapWithKeys(function ($item) {
+            return [$item['option'] => $item['value']];
+        });
+    }
+
     public static function getSettings($settings, $company_id)
     {
-        $settings = static::whereIn('option', $settings)->whereCompany($company_id)->get();
-        $companySettings = [];
-
-        foreach ($settings as $setting) {
-            $companySettings[$setting->option] = $setting->value;
-        }
-
-        return $companySettings;
+        return static::whereIn('option', $settings)->whereCompany($company_id)
+            ->get()->mapWithKeys(function ($item) {
+                return [$item['option'] => $item['value']];
+            });
     }
 
     public static function getSetting($key, $company_id)

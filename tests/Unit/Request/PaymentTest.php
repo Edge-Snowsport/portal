@@ -1,25 +1,28 @@
 <?php
 
 use Crater\Http\Requests\PaymentRequest;
-use Crater\Models\Payment;
-use Crater\Rules\UniqueNumber;
+use Illuminate\Validation\Rule;
 
 test('payment request validation rules', function () {
-    $request = new PaymentRequest;
+    $request = new PaymentRequest();
 
-    $this->assertEquals([
+    $this->assertEquals(
+        [
             'payment_date' => [
-                'required'
+                'required',
             ],
-            'user_id' => [
-                'required'
+            'customer_id' => [
+                'required',
+            ],
+            'exchange_rate' => [
+                'nullable'
             ],
             'amount' => [
-                'required'
+                'required',
             ],
             'payment_number' => [
                 'required',
-                new UniqueNumber(Payment::class)
+                Rule::unique('payments')->where('company_id', $request->header('company'))
             ],
             'invoice_id' => [
                 'nullable',
@@ -36,7 +39,7 @@ test('payment request validation rules', function () {
 });
 
 test('payment request authorize', function () {
-    $request = new PaymentRequest;
+    $request = new PaymentRequest();
 
     $this->assertTrue($request->authorize());
 });

@@ -2,21 +2,20 @@
 
 namespace Crater\Listeners\Updates\v3;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Crater\Listeners\Updates\Listener;
+use Crater\Models\Currency;
+use Crater\Models\Item;
+use Crater\Models\Payment;
+use Crater\Models\PaymentMethod;
 use Crater\Models\Setting;
 use Crater\Models\Unit;
-use Crater\Models\PaymentMethod;
-use Crater\Models\Currency;
-use Crater\Models\Payment;
-use Crater\Models\Item;
 use Crater\Models\User;
-use Crater\Listeners\Updates\Listener;
 use Illuminate\Database\Schema\Blueprint;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Version300 extends Listener
 {
-    const VERSION = '3.0.0';
+    public const VERSION = '3.0.0';
 
     /**
      * Create the event listener.
@@ -122,7 +121,7 @@ class Version300 extends Listener
             'symbol' => 'RSD',
             'precision' => '2',
             'thousand_separator' => '.',
-            'decimal_separator' => ','
+            'decimal_separator' => ',',
         ]);
     }
 
@@ -132,7 +131,7 @@ class Version300 extends Listener
 
         if ($payments) {
             foreach ($payments as $payment) {
-                $payment->unique_hash = str_random(60);
+                $payment->unique_hash = Hashids::connection(Payment::class)->encode($payment->id);
                 $payment->save();
 
                 $paymentMethod = PaymentMethod::where('name', $payment->payment_mode)

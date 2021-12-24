@@ -25,54 +25,50 @@ class DatabaseEnvironmentRequest extends FormRequest
     {
         switch ($this->get('database_connection')) {
             case 'sqlite':
-                return  [
+                return [
                     'app_url' => [
                         'required',
-                        'url'
-                    ],
-                    'app_domain' => [
-                        'required',
+                        'url',
                     ],
                     'database_connection' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                     'database_name' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                 ];
+
                 break;
             default:
-                return  [
+                return [
                     'app_url' => [
                         'required',
-                        'url'
-                    ],
-                    'app_domain' => [
-                        'required',
+                        'url',
                     ],
                     'database_connection' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                     'database_hostname' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                     'database_port' => [
                         'required',
-                        'numeric'
+                        'numeric',
                     ],
                     'database_name' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                     'database_username' => [
                         'required',
-                        'string'
+                        'string',
                     ],
                 ];
+
             break;
 
         }

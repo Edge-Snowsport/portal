@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Crater\Models\Address;
-use Illuminate\Database\Seeder;
-use Crater\Models\User;
 use Crater\Models\Setting;
+use Crater\Models\User;
+use Illuminate\Database\Seeder;
 
 class DemoSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class DemoSeeder extends Seeder
 
         $user->setSettings(['language' => 'en']);
 
-        Address::create(['company_id' => $user->company_id, 'country_id' => 1]);
+        Address::create(['company_id' => $user->companies()->first()->id, 'country_id' => 1]);
 
         Setting::setSetting('profile_complete', 'COMPLETED');
 

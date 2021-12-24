@@ -2,14 +2,13 @@
 
 namespace Crater\Models;
 
-use Crater\Models\Company;
-use Illuminate\Database\Eloquent\Model;
-use Crater\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name', 'company_id'];
 
     public function items()
@@ -22,9 +21,9 @@ class Unit extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function scopeWhereCompany($query, $company_id)
+    public function scopeWhereCompany($query)
     {
-        $query->where('company_id', $company_id);
+        $query->where('company_id', request()->header('company'));
     }
 
     public function scopeWhereUnit($query, $unit_id)
@@ -32,9 +31,18 @@ class Unit extends Model
         $query->orWhere('id', $unit_id);
     }
 
+    public function scopeWhereSearch($query, $search)
+    {
+        return $query->where('name', 'LIKE', '%'.$search.'%');
+    }
+
     public function scopeApplyFilters($query, array $filters)
     {
         $filters = collect($filters);
+
+        if ($filters->get('search')) {
+            $query->whereSearch($filters->get('search'));
+        }
 
         if ($filters->get('unit_id')) {
             $query->whereUnit($filters->get('unit_id'));
@@ -43,12 +51,14 @@ class Unit extends Model
         if ($filters->get('company_id')) {
             $query->whereCompany($filters->get('company_id'));
         }
+
+        return $query;
     }
 
     public function scopePaginateData($query, $limit)
     {
         if ($limit == 'all') {
-            return collect(['data' => $query->get()]);
+            return $query->get();
         }
 
         return $query->paginate($limit);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Crater\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,13 +9,7 @@ class Currency extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'code',
-        'symbol',
-        'precision',
-        'thousand_separator',
-        'decimal_separator',
-        'position'
+    protected $guarded = [
+        'id'
     ];
 }

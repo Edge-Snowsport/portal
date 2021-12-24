@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Crater\Models\CustomFieldValue;
 use Crater\Models\CustomField;
+use Crater\Models\CustomFieldValue;
 use Crater\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,7 +28,7 @@ class CustomFieldValueFactory extends Factory
             'custom_field_valuable_id' => 1,
             'type' => $this->faker->name,
             'custom_field_id' => CustomField::factory(),
-            'company_id' => User::where('role', 'super admin')->first()->company_id,
+            'company_id' => User::find(1)->companies()->first()->id,
         ];
     }
 }

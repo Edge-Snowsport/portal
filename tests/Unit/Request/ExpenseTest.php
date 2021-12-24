@@ -3,31 +3,41 @@
 use Crater\Http\Requests\ExpenseRequest;
 
 test('expense request validation rules', function () {
-    $request = new ExpenseRequest;
+    $request = new ExpenseRequest();
 
-    $this->assertEquals([
+    $this->assertEquals(
+        [
             'expense_date' => [
-                'required'
+                'required',
             ],
             'expense_category_id' => [
-                'required'
+                'required',
+            ],
+            'exchange_rate' => [
+                'nullable'
+            ],
+            'payment_method_id' => [
+                'nullable',
             ],
             'amount' => [
-                'required'
+                'required',
             ],
-            'user_id' => [
-                'nullable'
+            'customer_id' => [
+                'nullable',
             ],
             'notes' => [
-                'nullable'
-            ]
+                'nullable',
+            ],
+            'currency_id' => [
+                'required'
+            ],
         ],
         $request->rules()
     );
 });
 
 test('expense request authorize', function () {
-    $request = new ExpenseRequest;
+    $request = new ExpenseRequest();
 
     $this->assertTrue($request->authorize());
 });
