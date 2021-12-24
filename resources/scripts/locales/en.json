@@ -320,7 +320,6 @@
     "list_of_estimates": "This section will contain the list of quotes.",
     "mark_as_rejected": "Mark as rejected",
     "mark_as_accepted": "Mark as accepted",
-<<<<<<< HEAD:resources/assets/js/plugins/en.json
     "marked_as_accepted_message": "Quote marked as accepted",
     "marked_as_rejected_message": "Quote marked as rejected",
     "confirm_delete": "You will not be able to recover this Quote | You will not be able to recover these Quotes",
@@ -328,14 +327,6 @@
     "updated_message": "Quote updated successfully",
     "deleted_message": "Quote deleted successfully | Quotes deleted successfully",
     "user_email_does_not_exist": "User email does not exist",
-=======
-    "marked_as_accepted_message": "Estimate marked as accepted",
-    "marked_as_rejected_message": "Estimate marked as rejected",
-    "confirm_delete": "You will not be able to recover this Estimate | You will not be able to recover these Estimates",
-    "created_message": "Estimate created successfully",
-    "updated_message": "Estimate updated successfully",
-    "deleted_message": "Estimate deleted successfully | Estimates deleted successfully",
->>>>>>> 5.0.6:resources/scripts/locales/en.json
     "something_went_wrong": "something went wrong",
     "item": {
       "title": "Item Title",
