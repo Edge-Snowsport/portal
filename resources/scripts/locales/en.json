@@ -871,7 +871,7 @@
       "date_format_description": "A local date and time field which accepts a format parameter. The default format: 'Y' renders the current year.",
       "date_format_param_label": "Format",
       "sequence": "Sequence",
-      "sequence_description": "Consecutive sequence of numbers across your company. You can specify the length on the given paramter.",
+      "sequence_description": "Consecutive sequence of numbers across your company. You can specify the length on the given parameter.",
       "sequence_param_label": "Sequence Length",
       "customer_series": "Customer Series",
       "customer_series_description": "To set a different prefix/postfix for each customer.",
@@ -879,7 +879,7 @@
       "customer_sequence_description": "Consecutive sequence of numbers for each of your customer.",
       "customer_sequence_param_label": "Sequence Length",
       "random_sequence": "Random Sequence",
-      "random_sequence_description": "Random alphanumeric string. You can specify the length on the given paramter.",
+      "random_sequence_description": "Random alphanumeric string. You can specify the length on the given parameter.",
       "random_sequence_param_label": "Sequence Length",
       "invoices": {
         "title": "Invoices",
@@ -908,43 +908,29 @@
         "retrospective_edits_description": " Based on your country's laws or your preference, you can restrict users from editing finalised invoices."
       },
       "estimates": {
-<<<<<<< HEAD:resources/assets/js/plugins/en.json
         "title": "Quotes",
-        "estimate_prefix": "Quote Prefix",
-        "estimate_number_length": "Quote number length",
-        "default_estimate_email_body": "Default Quote Email Body",
-        "estimate_settings": "Quote Settings",
-        "autogenerate_estimate_number": "Auto-generate Quote Number",
-        "estimate_setting_description": "Disable this, If you don't wish to auto-generate quote numbers each time you create a new quote.",
-        "estimate_email_attachment": "Send quotes as attachments",
-        "estimate_email_attachment_setting_description": "Enable this if you want to send the quotes as an email attachment. Please note that 'View Quote' button in emails will not be displayed anymore when enabled.",
-        "enter_estimate_prefix": "Enter quote prefix",
-        "estimate_setting_updated": "Quote Setting updated successfully",
-=======
-        "title": "Estimates",
-        "estimate_number_format": "Estimate Number Format",
-        "estimate_number_format_description": "Customize how your estimate number gets generated automatically when you create a new estimate.",
-        "preview_estimate_number": "Preview Estimate Number",
+        "estimate_number_format": "Quote Number Format",
+        "estimate_number_format_description": "Customize how your quote number gets generated automatically when you create a new quote.",
+        "preview_estimate_number": "Preview Quote Number",
         "expiry_date": "Expiry Date",
-        "expiry_date_description": "Specify how expiry date is automatically set when you create an estimate.",
-        "expiry_date_days": "Estimate Expires after days",
+        "expiry_date_description": "Specify how expiry date is automatically set when you create a quote.",
+        "expiry_date_days": "Quote Expires after days",
         "set_expiry_date_automatically": "Set Expiry Date Automatically",
-        "set_expiry_date_automatically_description": "Enable this if you wish to set expiry date automatically when you create a new estimate.",
+        "set_expiry_date_automatically_description": "Enable this if you wish to set expiry date automatically when you create a new quote.",
         "default_formats": "Default Formats",
-        "default_formats_description": "Below given formats are used to fill up the fields automatically on estimate creation.",
-        "default_estimate_email_body": "Default Estimate Email Body",
->>>>>>> 5.0.6:resources/scripts/locales/en.json
+        "default_formats_description": "Below given formats are used to fill up the fields automatically on quote creation.",
+        "default_estimate_email_body": "Default Quote Email Body",
         "company_address_format": "Company Address Format",
         "shipping_address_format": "Shipping Address Format",
         "billing_address_format": "Billing Address Format",
-        "estimate_email_attachment": "Send estimates as attachments",
-        "estimate_email_attachment_setting_description": "Enable this if you want to send the estimates as an email attachment. Please note that 'View Estimate' button in emails will not be displayed anymore when enabled.",
-        "estimate_settings_updated": "Estimate Settings updated successfully",
-        "convert_estimate_options": "Estimate Convert Action",
-        "convert_estimate_description": "Specify what happens to the estimate after it gets converted to an invoice.",
+        "estimate_email_attachment": "Send quotes as attachments",
+        "estimate_email_attachment_setting_description": "Enable this if you want to send the quotes as an email attachment. Please note that 'View Quote' button in emails will not be displayed anymore when enabled.",
+        "estimate_settings_updated": "Quote Settings updated successfully",
+        "convert_estimate_options": "Quote Convert Action",
+        "convert_estimate_description": "Specify what happens to the quote after it gets converted to an invoice.",
         "no_action": "No action",
-        "delete_estimate": "Delete estimate",
-        "mark_estimate_as_accepted": "Mark estimate as accepted"
+        "delete_estimate": "Delete quote",
+        "mark_estimate_as_accepted": "Mark quote as accepted"
       },
       "payments": {
         "title": "Payments",
@@ -1164,7 +1150,7 @@
     },
     "backup": {
       "title": "Backup | Backups",
-      "description": "The backup is a zipfile that contains all files in the directories you specify along with a dump of your database",
+      "description": "The backup is a zip file that contains all files in the directories you specify along with a dump of your database",
       "new_backup": "Add New Backup",
       "create_backup": "Create Backup",
       "select_backup_type": "Select Backup Type",
@@ -1342,7 +1328,6 @@
       "database_variables_save_successfully": "Database configured successfully."
     }
   },
-<<<<<<< HEAD:resources/assets/js/plugins/en.json
   "layout_login": {
     "copyright_crater": "Copyright @ Crater - 2020",
     "super_simple_invoicing": "Super Simple Invoicing",
@@ -1351,8 +1336,6 @@
     "crater_help": "Crater helps you track expenses, record payments & generate beautiful",
     "invoices_and_estimates": "invoices & quotes with ability to choose multiple templates."
   },
-=======
->>>>>>> 5.0.6:resources/scripts/locales/en.json
   "validation": {
     "invalid_phone": "Invalid Phone Number",
     "invalid_url": "Invalid url (ex: http://www.craterapp.com)",
@@ -1393,7 +1376,7 @@
     "prefix_maxlength": "Prefix should not be greater than 5 characters.",
     "something_went_wrong": "something went wrong",
     "number_length_minvalue": "Number length should be greater than 0",
-    "at_least_one_ability": "Please select atleast one Permission.",
+    "at_least_one_ability": "Please select at least one Permission.",
     "valid_driver_key": "Please enter a valid {driver} key.",
     "valid_exchange_rate": "Please enter a valid exchange rate.",
     "company_name_not_same": "Company name must match with given name."
