@@ -90,7 +90,7 @@
 <hr class="item-cell-table-hr">
 
 <div class="total-display-container">
-    <table width="100%" cellspacing="0px" border="0" class="total-display-table @if(count($invoice->items) > 12) page-break @endif">
+    <table width="100%" cellspacing="0px" border="0" class="total-display-table @if(count($invoice->items) > 10) page-break @endif">
         <tr>
             <td class="border-0 total-table-attribute-label">@lang('pdf_subtotal')</td>
             <td class="py-2 border-0 item-cell total-table-attribute-value">
