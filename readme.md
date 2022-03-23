@@ -22,7 +22,7 @@ Web Application is made using Laravel & VueJS while the Mobile Apps are built us
 - [Installation Steps](https://docs.craterapp.com/installation.html)
 - [User Guide](https://docs.craterapp.com/)
 - [Developer Guide](https://docs.craterapp.com/developer-guide.html)
-- [API Documentation](https://docs.craterapp.com/api-documentation.html)
+- [API Documentation](https://api-docs.craterapp.com)
 
 ## Download
 
@@ -54,20 +54,24 @@ Join the Crater discord server to discuss:
 - [x] Add and Use Custom Fields on Invoices & Estimates.
 - [x] Multiple Companies
 - [x] Recurring Invoices
-- [ ] Modules
+- [x] Customer Portal
+- [x] Accept Payments (Stripe Integration)
+- [x] White Labeling (Easy Invoice, Email & Consumer Portal Theme customisation)
+- [ ] Modules API
 - [ ] Blockchain Integration
 - [ ] Web 3.0 Accounting
-- [ ] White Labeling (Easy Invoice, Email & Consumer Portal Theme customisation)
-- [ ] Vendors, Inventory & Bills
+- [ ] Vendors & Bills
+- [ ] Inventory Management 
 - [ ] Payment Reminders
 - [ ] Improve Accessibility
-- [ ] Customer Portal
-- [ ] Accept Payments (Stripe Integration)
 - [ ] Debit & Credit Notes
+- [ ] Time Tracking
+- [ ] Full service Payroll
+
 
 ## Copyright
 
-© 2021 Crater Invoice, Inc.
+© 2022 Crater Invoice, Inc.
 
 **Special thanks to:**
 
