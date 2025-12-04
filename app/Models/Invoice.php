@@ -621,7 +621,7 @@ class Invoice extends Model implements HasMedia
 
     public function getCustomerBillingAddress()
     {
-        if ($this->customer && (! $this->customer->billingAddress()->exists())) {
+        if (! $this->customer) {
             return false;
         }
 
